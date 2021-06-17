@@ -36,6 +36,11 @@ public class MyDriver {
 
 
 #MAPPER
+// exception handling 
+import java.io.IOException;
+
+// box classes import
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
@@ -58,11 +63,14 @@ public class MyMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 				}
 			}
 			if (flag) {
-				context.write(new Text("PrimeSum"), new IntWritable(number));
+				context.write(new Text("Prime"), new IntWritable(number));
+			}else {
+				context.write(new Text("Composite"), new IntWritable(number));
 			}
 		}
 	}
 }
+
 
 
 #REDUCER
@@ -82,11 +90,15 @@ public class MyReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 	public void reduce(Text key, Iterable<IntWritable> values, Context context)
 			throws IOException, InterruptedException {
 		int sum = 0;
-		if (key.equals("PrimeSum")) {
+		if (key.equals("Prime")) {
+			for (IntWritable value : values) {
+				sum += value.get();
+			}
+		}else{
 			for (IntWritable value : values) {
 				sum += value.get();
 			}
 		}
-	}
 		context.write(key, new IntWritable(sum));
+	}
 }
