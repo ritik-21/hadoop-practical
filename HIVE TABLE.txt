@@ -1,0 +1,45 @@
+External table-
+
+[cloudera@quickstart Desktop]$ hive
+
+Logging initialized using configuration in file:/etc/hive/conf.dist/hive-log4j.properties
+WARNING: Hive CLI is deprecated and migration to Beeline is recommended.
+hive> create external table student_table(Name STRING,Enr_no STRING,RollNo INT)
+    > row format delimited
+    > fields terminated by '\t'
+    > location '/user/cloudera/stu_table';
+OK
+Time taken: 4.415 seconds
+hive> select * from student_table;
+OK
+Time taken: 2.236 seconds
+hive> select * from student_table;
+OK
+Amit   GE_001   01	NULL	NULL
+Sumit  GE_002   02	NULL	NULL
+Raju   GE_003   03	NULL	NULL
+Ram    GE_004  04	NULL  NULL
+Time taken: 0.119 seconds, Fetched: 4 row(s)
+
+INTERNAL TABLE -
+[cloudera@quickstart Desktop]$ hive
+
+Logging initialized using configuration in file:/etc/hive/conf.dist/hive-log4j.properties
+WARNING: Hive CLI is deprecated and migration to Beeline is recommended.
+hive> create table details_table(Name STRING,Enr_no STRING,RollNo INT)
+    > row format delimited
+    > fields terminated by '\t'
+    > location '/user/cloudera/det_table';
+OK
+Time taken: 0.527 seconds
+hive> select * from details_table;
+OK
+Time taken: 0.338 seconds
+hive> select * from details_table;
+OK
+Amit   GE_001   01	NULL	NULL
+Sumit  GE_002   02	NULL	NULL
+Raju   GE_003   03	NULL	NULL
+Ram    GE_004   04	NULL	NULL
+Time taken: 0.085 seconds, Fetched: 4 row(s)
+
